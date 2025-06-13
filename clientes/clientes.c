@@ -4,72 +4,63 @@
 
 #define QTD_CLIENTE 100
 int index_cliente = 0;
-Cliente clientes [QTD_CLIENTE];
+Cliente clientes[QTD_CLIENTE];
 
-void insere_clientes(){
-    int opcao;
-    if (index_cliente >= QTD_CLIENTE){
-        printf("Limite de clientes atingido!\n\n");
-    }else{
-        int i = 0;
-        while (strcmp(clientes[i].nome, "") != 0 ){
-            i++;
-        }
-        printf("insira o nome do cliente: \t");
-        scanf("%s", clientes[i].nome);
-        printf("insira o e-mail do cliente: \t");
-        scanf("%s", clientes[i].email);
+void insere_clientes() {
+    while (index_cliente < QTD_CLIENTE) {
+        printf("Insira o nome do cliente: ");
+        scanf("%s", clientes[index_cliente].nome);
+        printf("Insira o e-mail do cliente: ");
+        scanf("%s", clientes[index_cliente].email);
 
+        clientes[index_cliente].ID = index_cliente + 1;
         index_cliente++;
-        clientes[i].ID = index_cliente;
 
-        printf("Deseja inserir mais clientes?\n");
-        printf("1 - SIM\n");
-        printf("2 - NÃO\n");
+        int opcao;
+        printf("Deseja inserir mais clientes?\n1 - SIM\n2 - NAO\n");
         scanf("%d", &opcao);
-        if (opcao == 1){
-            insere_clientes();
-        }
+        if (opcao != 1) break;
     }
 }
 
-
-void listar_clientes (){ //listas = imprimi-r
-    int i = 0;
-    while (strcmp(clientes[i].nome, "")) {
-        printf("Cliente %d - nome: %s\n\n", (i+1), clientes[i].nome);
-        printf("Cliente %d - email: %s\n\n",(i+1), clientes[i].email);
-        i++;
+void listar_clientes() {
+    for (int i = 0; i < index_cliente; i++) {
+        printf("Cliente %d - Nome: %s | Email: %s\n",
+               clientes[i].ID, clientes[i].nome, clientes[i].email);
     }
 }
 
+void excluir_clientes() {
+    int id;
+    printf("Informe o ID do cliente a excluir: ");
+    scanf("%d", &id);
 
-void excluir_clientes(){
-    char nome[100];
-    listar_clientes();
-    printf("Digite o nome do cliente a ser removido:");
-    scanf("%s", nome);
-    int i = 0;
-    while (strcmp(clientes[i].nome, nome) != 0 ){
-        i++;
+    if (id < 1 || id > index_cliente) {
+        printf("ID invalido!\n");
+        return;
     }
-    strcpy(clientes[i].nome, "");
-    strcpy(clientes[i].email, "");
+
+    for (int i = id - 1; i < index_cliente - 1; i++) {
+        clientes[i] = clientes[i + 1];
+        clientes[i].ID = i + 1;
+    }
     index_cliente--;
-    printf("Quantidade de clientes cadastrados: %d\n", index_cliente);
+    printf("Cliente removido com sucesso!\n");
 }
 
+void altera_clientes() {
+    int id;
+    printf("Informe o ID do cliente a alterar: ");
+    scanf("%d", &id);
 
-void altera_clientes(){
-    char nome [100];
-    listar_clientes ();
-    printf("Digite o nome do cliente a ser editado: ");
-    scanf("%s", nome);
-    int i = 0;
-    while (strcmp(clientes[i].nome, nome) != 0 ){
-        i++;
+    if (id < 1 || id > index_cliente) {
+        printf("ID invalido!\n");
+        return;
     }
-    printf("Insira o nome editado: ");
-    scanf ("%s", clientes[i].nome, nome);
-}
 
+    printf("Novo nome: ");
+    scanf("%s", clientes[id - 1].nome);
+    printf("Novo email: ");
+    scanf("%s", clientes[id - 1].email);
+    printf("Cliente atualizado com sucesso!\n");
+}

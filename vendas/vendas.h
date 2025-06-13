@@ -15,6 +15,6 @@ typedef struct venda {
 
 void gerar_venda();
 
-#endif //VENDA_H
+#endif
 
 

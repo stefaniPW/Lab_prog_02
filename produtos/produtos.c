@@ -2,68 +2,30 @@
 #include <string.h>
 #include "produtos.h"
 
-
 #define QTD_PRODUTOS 100
-
-Produto produtos [QTD_PRODUTOS];
+Produto produtos[QTD_PRODUTOS];
 int index_produto = 0;
-void insere_produtos(){
-    int opcao;
-    if (index_produto >= QTD_PRODUTOS){
-        printf ("Limite de produtos atingido!\n\n");
-    }else{
-        printf ("insira o nome do produto: \t");
+
+void insere_produtos() {
+    while (index_produto < QTD_PRODUTOS) {
+        printf("Insira o nome do produto: ");
         scanf("%s", produtos[index_produto].nome);
-        printf ("insira o preço do produto: \t");
-        scanf("%lf", produtos[index_produto].preco);
+        printf("Insira o preco do produto: ");
+        scanf("%lf", &produtos[index_produto].preco);
+
+        produtos[index_produto].ID = index_produto + 1;
         index_produto++;
-        printf("Deseja inserir mais produtos?\n");
-        printf("1 - SIM\n");
-        printf("2 - NÃO\n");
+
+        int opcao;
+        printf("Deseja inserir mais produtos?\n1 - SIM\n2 - NAO\n");
         scanf("%d", &opcao);
-        if (opcao == 1){
-            insere_produtos();
-        }
+        if (opcao != 1) break;
     }
 }
 
-
-void listar_produtos(){
-    int j;
-    for (j = 0; j < index_produto; j++){
-        printf("Produtos %d - nome: %s\n\n", (j+1), produtos[j].nome);
-        printf("Produtos %d - preço: %lf\n\n", (j+1), produtos[j].preco);
+void listar_produtos() {
+    for (int j = 0; j < index_produto; j++) {
+        printf("Produto %d - Nome: %s | Preco: %.2lf\n",
+               produtos[j].ID, produtos[j].nome, produtos[j].preco);
     }
 }
-
-
-void excluir_produtos(){
-    char nome[100];
-    listar_produtos();
-    printf("Digite o nome do produto a ser removido:");
-    scanf("%s", nome);
-    int j = 0;
-    while (strcmp(produtos[j].nome, nome) != 0 ){
-        j++;
-    }
-    strcpy(produtos[j].nome, "");
-    strcpy(produtos[j].nome, "");
-    index_produto--;
-    printf("Quantidade de produtos cadastrados: %d\n", index_produto);
-}
-
-
-
-void altera_produtos(){
-    char nome [100];
-    listar_produtos();
-    printf("Digite o produto a ser editado: ");
-    scanf("%s", nome);
-    int j = 0;
-    while (strcmp(produtos[j].nome, nome) != 0 ){
-        j++;
-    }
-    printf("Insira o nome editado: ");
-    scanf ("%s", produtos[j].nome, nome);
-}
-
