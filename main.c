@@ -15,7 +15,10 @@ int main () {
                "4 = Listar clientes\n"
                "5 = Listar produtos\n"
                "6 = Excluir cliente\n"
-               "7 = Alterar cliente\n");
+               "7 = Alterar cliente\n"
+               "8 = Listar vendas\n"
+               "9 = Cancelar venda\n"
+               "10 = Relatorio por periodo\n");
         scanf("%d", &opcao);
         printf("\n\n");
 
@@ -40,6 +43,15 @@ int main () {
                 break;
             case 7:
                 altera_clientes();
+                break;
+            case 8:
+                listar_vendas();
+                break;
+            case 9:
+                cancelar_venda();
+                break;
+            case 10:
+                relatorio_por_periodo();
                 break;
             case 0:
                 printf("Saindo do programa\n");
